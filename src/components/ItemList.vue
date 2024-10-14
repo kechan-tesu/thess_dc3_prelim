@@ -1,13 +1,7 @@
 <template>
   <div class="item-list">
-    <h2>Item List</h2>
-    <div class="items-container">
-      <Item
-        v-for="product in products"
-        :key="product.id"
-        :product="product"
-        @add-to-cart="handleAddToCart"
-      />
+    <div v-for="item in filteredItems" :key="item.id">
+      <Item :item="item" :isVisible="isVisible" @add-to-cart="handleAddToCart" />
     </div>
   </div>
 </template>
@@ -21,40 +15,36 @@ export default {
     Item
   },
   props: {
-    products: {
-      type: Array,
-      required: true
+    products: Array,
+    isVisible: Boolean
+  },
+  computed: {
+    filteredItems() {
+      return this.isVisible ? this.products : []
     }
   },
   methods: {
-    handleAddToCart(product) {
-      console.log(`Adding product to cart: ${product.name}`)
-      console.log('Product Details:', product)
+    handleAddToCart(item) {
+      console.log(`Added to cart: ${item.name}, Price: ${item.price}`)
     }
   }
 }
 </script>
 
 <style>
-.product-list {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.product-list h2 {
-  margin-top: 0;
-  font-weight: bold;
-  color: #333;
-}
-
-.products-container {
+.item-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.item-list > div {
+  border: 1px solid #3e3b3b;
+  border-radius: 10px;
+  padding: 10px;
+  width: 200px;
+  background-color: rgb(252, 207, 207);
 }
 </style>

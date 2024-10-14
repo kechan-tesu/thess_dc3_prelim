@@ -1,74 +1,55 @@
 <template>
-  <div class="product-item">
-    <h3>{{ product.name }}</h3>
-    <p class="product-price">Price: P{{ product.price }}</p>
-    <button @click="addToCart" :aria-label="`Add ${product.name} to cart`">Add to Cart</button>
-    <div class="itemLists-container">
-      <ItemList v-if="filteredItems == true">
-        <p>You have {{ filteredItems }} item(s) left!</p>
-      </ItemList>
-    </div>
+  <div class="item" v-if="isVisible">
+    <h3>{{ item.name }}</h3>
+    <p>Price: {{ item.price }}</p>
+    <button @click="addToCart">Add to Cart</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ProductItem',
+  name: 'Item',
   props: {
-    product: {
-      type: Object,
-      required: true
-    }
+    item: Object,
+    isVisible: Boolean
   },
-
-  computed: {
-    filteredItems(isVisible) {
-      return this.product.filter(this.product => !task.completed).length;
-    },
-  },
-
   methods: {
     addToCart() {
-      this.$emit('add-to-cart', this.product)
+      this.$emit('add-to-cart', this.item)
     }
   }
 }
 </script>
 
-<style>
-.product-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin: 1rem;
+<style scoped>
+.item {
+  text-align: center;
+  border: 1px solid #95e98c;
+  border-radius: 8px;
+  padding: 15px;
+  background-color: #9bb4cb;
 }
 
-.product-item h3 {
-  font-size: 1.5rem;
+.item h3 {
+  color: #333;
+}
+
+.item p {
+  font-size: 18px;
   font-weight: bold;
-  margin-bottom: 0.5rem;
 }
 
-.product-price {
-  font-size: 1.2rem;
-  color: #666;
-  margin-bottom: 1rem;
-}
-
-.product-item button {
-  background-color: #4caf50;
-  color: #fff;
-  padding: 0.5rem 1rem;
+.item button {
+  background-color: #28a745;
+  color: rgb(219, 183, 183);
   border: none;
-  border-radius: 0.25rem;
+  padding: 8px 15px;
+  font-size: 14px;
   cursor: pointer;
+  border-radius: 5px;
 }
 
-.product-item button:hover {
-  background-color: #3e8e41;
+.item button:hover {
+  background-color: #218838;
 }
 </style>
